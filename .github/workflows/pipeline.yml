@@ -1,0 +1,67 @@
+name: Integration pipeline
+
+on:
+    push:
+        branches:
+            - master
+        
+jobs:
+    frontend:
+        runs-on: ubuntu-20.04
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                node-version: '20'
+
+            - name: Install dependencies
+              run: |
+                cd frontend
+                npm install
+
+            - name: Check style
+              run: |
+                cd frontend
+                npm run lint
+
+            - name: Run tests
+              run: |
+                cd frontend
+                npm test
+
+            - name: Build frontend
+              run: |
+                cd frontend
+                npm run build
+              
+    backend:
+        runs-on: ubuntu-20.04
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: '20'
+
+            - name: Install dependencies
+              run: |
+                cd backend
+                npm install
+
+            - name: Run tests
+              run: |
+                cd backend
+                npm test
+
+            - name: e2e tests
+              uses: cypress-io/github-action@v5
+              with:
+                command: |
+                    cd frontend
+                    npm run test:e2e
+                start: |
+                    cd backend
+                    npm run start:test
+                wait-on: http://localhost:3003

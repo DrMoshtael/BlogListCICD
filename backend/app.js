@@ -16,6 +16,11 @@ mongoose.connect(config.MONGODB_URI)
     .catch(error => logger.error('Error connecting to MongoDB:', error.message))
 
 app.use(cors())
+
+if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
+    app.use(express.static('../frontend/dist'))
+}
+
 app.use(express.json())
 app.use(middleware.requestLogger)
 app.use(middleware.tokenExtractor)
