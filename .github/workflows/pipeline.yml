@@ -55,10 +55,17 @@ jobs:
                 cd backend
                 npm test
 
+            - name: Set environment variables
+              run: |
+                echo "CYPRESS_PORT=${{ secrets.PORT }}" >> $GITHUB_ENV
+                echo "CYPRESS_MONGODB_URI=${{ secrets.MONGODB_URI }}" >> $GITHUB_ENV
+                echo "CYPRESS_TEST_MONGODB_URI=${{ secrets.TEST_MONGODB_URI }}" >> $GITHUB_ENV
+                echo "CYPRESS_SECRET=${{ secrets.SECRET }}" >> $GITHUB_ENV
+
             - name: e2e tests
               uses: cypress-io/github-action@v5
               env:   
-                CYPRESS_PORT: 3003
+                CYPRESS_PORT: ${{ secrets.PORT }}
                 CYPRESS_MONGODB_URI: ${{ secrets.MONGODB_URI }}
                 CYPRESS_TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
                 CYPRESS_SECRET: ${{ secrets.SECRET }}
