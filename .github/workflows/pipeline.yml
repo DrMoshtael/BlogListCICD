@@ -58,7 +58,7 @@ jobs:
             - name: e2e tests
               uses: cypress-io/github-action@v5
               env:   
-                CYPRESS_PORT: ${{ secrets.PORT }}
+                CYPRESS_PORT: 3003
                 CYPRESS_MONGODB_URI: ${{ secrets.MONGODB_URI }}
                 CYPRESS_TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
                 CYPRESS_SECRET: ${{ secrets.SECRET }}
@@ -70,3 +70,9 @@ jobs:
                     cd backend
                     npm run start:test
                 wait-on: http://localhost:3003
+
+            - name: Print environment variables for debugging
+              run: |
+                printenv | grep -i CYPRESS_MONGODB_URI
+                printenv | grep -i CYPRESS_PORT
+                printenv | grep -i CYPRESS_SECRET
