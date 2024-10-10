@@ -73,6 +73,7 @@ jobs:
                 CYPRESS_TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
                 CYPRESS_SECRET: ${{ secrets.SECRET }}
               with:
+                install: false  # Skip the default package manager install step as no lockfile in root directory
                 command: |
                     cd frontend
                     npm run test:e2e
