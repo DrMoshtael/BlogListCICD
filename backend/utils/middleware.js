@@ -41,7 +41,7 @@ const tokenExtractor = (request, response, next) => {
 
 const userExtractor = async (req, res, next) => {
     if (req.token) {
-        const decodedToken = jwt.verify(req.token, process.env.SECRET)
+        const decodedToken = jwt.verify(req.token, process.env.CYPRESS_SECRET)
         req.user = await User.findById(decodedToken.id)
     }
     next()
