@@ -65,3 +65,8 @@ jobs:
                     cd backend
                     npm run start:test
                 wait-on: http://localhost:3003
+              env:   
+                    PORT: ${{ secrets.PORT }}
+                    MONGODB_URI: ${{ secrets.MONGODB_URI }}
+                    TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+                    SECRET: ${{ secrets.SECRET }}
