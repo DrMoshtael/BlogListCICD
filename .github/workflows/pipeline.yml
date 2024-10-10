@@ -45,9 +45,14 @@ jobs:
               with:
                 node-version: '20'
 
-            - name: Install dependencies
+            - name: Install dependencies (backend)
               run: |
                 cd backend
+                npm install
+
+            - name: Install dependencies (frontend)
+              run: |
+                cd frontend
                 npm install
 
             - name: Run tests
@@ -75,9 +80,3 @@ jobs:
                     cd backend
                     npm run start:test
                 wait-on: http://localhost:3003
-
-            - name: Print environment variables for debugging
-              run: |
-                printenv | grep -i CYPRESS_MONGODB_URI
-                printenv | grep -i CYPRESS_PORT
-                printenv | grep -i CYPRESS_SECRET
