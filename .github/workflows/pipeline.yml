@@ -75,4 +75,5 @@ jobs:
               with:
                 working-directory: frontend
                 command: npm run test:e2e
+                wait-on: http://localhost:3003/api
 
