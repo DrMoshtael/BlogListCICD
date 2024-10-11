@@ -68,7 +68,7 @@ jobs:
             - name: Start backend testing server
               run: |
                 cd backend
-                npm run start:test
+                npm run start:test & #Start the backend server in the background
 
             - name: e2e tests
               uses: cypress-io/github-action@v6
