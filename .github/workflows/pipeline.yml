@@ -65,14 +65,16 @@ jobs:
                 cd backend
                 npm test
 
+            - name: Start backend testing server
+              run: |
+                cd backend
+                npm run start:test
+
             - name: e2e tests
               uses: cypress-io/github-action@v6
               with:
                 working-directory: frontend
                 command: npm run test:e2e
-                start: |
-                    cd ../backend
-                    npm run start:test
                 wait-on: http://localhost:3003
               env:   
                 CYPRESS_PORT: ${{ secrets.PORT }}
