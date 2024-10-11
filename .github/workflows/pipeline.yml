@@ -75,3 +75,18 @@ jobs:
             #   with:
             #     working-directory: frontend
             #     command: npm run test:e2e
+
+            - name: Deploy to Render
+              run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
+
+    tag_release:
+        needs: [frontend, backend]
+        runs-on: ubuntu-20.04
+        steps:
+            - uses: actions/checkout@v4
+            - name: Bump version and push tag
+              if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message),'#skip') }}
+              uses: anothrNick/github-tag-action@a2c70ae13a881faf2b4953baaa9e49731997ab36
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                DEFAULT_BUMP: patch
