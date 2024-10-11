@@ -65,11 +65,17 @@ jobs:
                 cd backend
                 npm test
 
+            - name: Start backend testing server
+              run: |
+                cd backend
+                npm run start:test & #Start the backend server in the background
+            
+            - name: Wait for backend to be ready
+              run: npx wait-on http://localhost:3003
+
             - name: e2e tests
-              uses: cypress-io/github-action@v5
+              uses: cypress-io/github-action@v6
               with:
-                working-directory: backend
-                command: cd ../frontend && npm run test:e2e
-                start: npm run start:test
-                wait-on: http://localhost:3003
+                working-directory: frontend
+                command: npm run test:e2e
 
