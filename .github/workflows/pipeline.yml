@@ -66,18 +66,17 @@ jobs:
                 npm test
 
             - name: e2e tests
-              uses: cypress-io/github-action@v5
+              uses: cypress-io/github-action@v6
+              with:
+                working-directory: frontend
+                command: npm run test:e2e
+                start: |
+                    cd ../backend
+                    npm run start:test
+                wait-on: http://localhost:3003
               env:   
                 CYPRESS_PORT: ${{ secrets.PORT }}
                 CYPRESS_MONGODB_URI: ${{ secrets.MONGODB_URI }}
                 CYPRESS_TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
                 CYPRESS_SECRET: ${{ secrets.SECRET }}
-              with:
-                install: false  # Skip the default package manager install step as no lockfile in root directory
-                command: |
-                    cd frontend
-                    npm run test:e2e
-                start: |
-                    cd backend
-                    npm run start:test
-                wait-on: http://localhost:3003
+
