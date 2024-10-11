@@ -36,6 +36,11 @@ jobs:
               
     backend:
         runs-on: ubuntu-20.04
+        env:   
+            CYPRESS_PORT: ${{ secrets.PORT }}
+            CYPRESS_MONGODB_URI: ${{ secrets.MONGODB_URI }}
+            CYPRESS_TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+            CYPRESS_SECRET: ${{ secrets.SECRET }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -56,11 +61,6 @@ jobs:
                 npm install
 
             - name: Run tests
-              env:   
-                CYPRESS_PORT: ${{ secrets.PORT }}
-                CYPRESS_MONGODB_URI: ${{ secrets.MONGODB_URI }}
-                CYPRESS_TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-                CYPRESS_SECRET: ${{ secrets.SECRET }}
               run: |
                 cd backend
                 npm test
@@ -76,9 +76,4 @@ jobs:
                 working-directory: frontend
                 command: npm run test:e2e
                 wait-on: http://localhost:3003
-              env:   
-                CYPRESS_PORT: ${{ secrets.PORT }}
-                CYPRESS_MONGODB_URI: ${{ secrets.MONGODB_URI }}
-                CYPRESS_TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
-                CYPRESS_SECRET: ${{ secrets.SECRET }}
 
