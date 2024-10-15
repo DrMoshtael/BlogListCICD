@@ -11,7 +11,7 @@ const Blog = ({ blog, blogs, setBlogs, user, likeHandler }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: 'solid',
+    border: 'dashed',
     borderWidth: 1,
     marginBottom: 5
   }
